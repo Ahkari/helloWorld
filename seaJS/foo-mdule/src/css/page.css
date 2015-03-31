@@ -1,0 +1,94 @@
+*{
+	margin: 0px;
+	padding: 0px;
+}
+a,a:hover,a:link,a:active,a:visited{
+	text-decoration: none;
+	color: #333;
+}
+li{
+	list-style-type:none; 
+}
+.nav{
+	position: fixed;
+	height: 50px;
+	width: 100%;
+	background: #bababa;
+	opacity: 
+}
+
+.allWrap{
+	width: 100%;
+}
+.header{
+	width: 100%;
+	height: 80px;
+	background: #bababa;
+}
+.header_nav_tools{
+	display: inline-block;
+	width: 25%;
+	margin-left: 20%;
+	margin-right: 5%;
+}
+.header_nav_operation{
+	display: inline-block;
+	width: 25%;
+	margin-left: 5%;
+	margin-right: 18%;
+}
+.header_nav_tools li{
+	display: inline-block;
+}
+.header_nav_operation li{
+	display: inline-block;
+}
+
+
+
+
+
+
+#img_wrap{
+	/*background: url(".testImg/huaban.jpeg");*/
+	/*margin: 0px auto;*/
+	text-align: center;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.footer{
+	height: 25px;
+	text-align: center;
+	background: #ddd;
+}
+.footer span{
+	line-height: 25px;
+}

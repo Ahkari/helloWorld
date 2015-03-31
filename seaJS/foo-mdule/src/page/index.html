@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"> 
+<html> 
+<head> 
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>如何使用sea.js</title>
+<link rel="stylesheet" type="text/css" href="../css/jquery.Jcrop.css" /> 
+<link href="../css/page.css" rel="stylesheet" type="text/css" />
+<style>
+*{
+	padding: 0px;
+	margin: 0px;
+}
+body{
+	font-family: "微软雅黑";
+}
+</style>	
+</head> 
+<body>
+	<div class="allWrap">
+		<h3>第一部分：主页面的总配置</h3>
+		<p>第一步：导入sea.js</p>
+		<p>&lt;script type="text/javascript" src="../scripts/libs/sea.js"&gt;&lt;/script&gt;</p>
+		<p>第二步：配置sea.js</p>
+		<p>seajs.config({</p>
+		<p>base:"../scripts/",	//A处。查找路径的根路径</p> 
+		<p>alias:{</p>
+		<p>"jquery":"libs/jquery.js",</p>
+		<p>"Jcrop":"libs/jquery.Jcrop.min.js",</p>
+		<p>"main":"main.js",		//B处，基于A处。路径映射为别名。</p>
+		<p>"other":"other.js"</p>
+		<p>}</p>
+		<p>});</p>
+		<p>第三步：入口模块加载</p>
+		<p>seajs.use("main");	//C处，基于B处别名。可加回调函数。</p>
+		<br/>
+		<h3>第二部分：入口模块里引用其他模块</h3>
+		<p>第一步：</p>
+		<p>define("main",["jquery","other"],function(){		//全局函数define定义次模块id，和依赖的其他js，和可含三个参数的方法。</p>
+		<p>var $=require("jquery");</p>
+		<p>var other=requird("other");		//依赖id为other的模块，other中通过exports方法暴露的数据和方法赋给other对象。</p>
+		<p>var getName=other.sayName("Lily");	</p>
+		<p>console.log(getName);</p>
+		<P>});</p>
+		<br/>
+		<h3>第三部分：其他模块暴露接口</h3>
+		<p>define("other",function(){	</p>
+		<p>exports.sayName=function(name){re"hello "+name}</p>
+		<p>});</p>
+		<hr/>
+		<h3></h3>
+
+	</div>
+
+
+
+<script type="text/javascript" src="../scripts/libs/sea.js"></script>
+<script>
+	seajs.config({
+    	base: "../scripts/",
+    	alias: {
+      		"jquery": "libs/jquery.js",
+      		"Jcrop":"libs/jquery.Jcrop.min.js",
+      		// "pageCon":"pageControl.js",
+      		"main":"main.js",
+      		"other":"other.js"
+    	}
+  	});
+
+	// 加载入口模块
+	seajs.use("main");
+
+
+
+</script>
+</body>
+</html> 
