@@ -12,21 +12,21 @@
  * Released under the MIT, BSD, and GPL Licenses.
  *
  * Date: Mon Nov 21 21:11:03 2011 -0500
- */
-(function( window, undefined ) {
+ *///2015
+(function( window, undefined ) {	//bookmark1，全部代码包裹在匿名自调用函数中，加载完jquery文件后会立即开始执行。
 
 // Use the correct document accordingly with window argument (sandbox)
 var document = window.document,
 	navigator = window.navigator,
 	location = window.location;
-var jQuery = (function() {
+var jQuery = (function() {	//bookmark2.构造jQuery对象
 
 // Define a local copy of jQuery
 var jQuery = function( selector, context ) {
 		// The jQuery object is actually just the init constructor 'enhanced'
 		return new jQuery.fn.init( selector, context, rootjQuery );
 	},
-
+	//	一堆局部变量声明，29-96
 	// Map over jQuery in case of overwrite
 	_jQuery = window.jQuery,
 
@@ -94,11 +94,11 @@ var jQuery = function( selector, context ) {
 	// [[Class]] -> type pairs
 	class2type = {};
 
-jQuery.fn = jQuery.prototype = {
-	constructor: jQuery,
-	init: function( selector, context, rootjQuery ) {
+jQuery.fn = jQuery.prototype = {		//jQuery.fn=jQuery.prototype
+	constructor: jQuery,	//原型对象属性指向jQuery构造函数
+	init: function( selector, context, rootjQuery ) {		//原型方法jQuery.fn.init()，负责解析参数selector和context的类型并执行查找。
 		var match, elem, ret, doc;
-
+		
 		// Handle $(""), $(null), or $(undefined)
 		if ( !selector ) {
 			return this;
@@ -205,7 +205,7 @@ jQuery.fn = jQuery.prototype = {
 
 		return jQuery.makeArray( selector, this );
 	},
-
+	//一堆原型属性和方法。208-319
 	// Start with an empty selector
 	selector: "",
 
@@ -319,9 +319,9 @@ jQuery.fn = jQuery.prototype = {
 };
 
 // Give the init function the jQuery prototype for later instantiation
-jQuery.fn.init.prototype = jQuery.fn;
+jQuery.fn.init.prototype = jQuery.fn;	//原型覆盖。
 
-jQuery.extend = jQuery.fn.extend = function() {
+jQuery.extend = jQuery.fn.extend = function() {	//用于合并两个或多个对象的属性到第一个方法
 	var options, name, src, copy, copyIsArray, clone,
 		target = arguments[0] || {},
 		i = 1,
@@ -385,7 +385,7 @@ jQuery.extend = jQuery.fn.extend = function() {
 	return target;
 };
 
-jQuery.extend({
+jQuery.extend({	//一堆静态属性和方法。388-892
 	noConflict: function( deep ) {
 		if ( window.$ === jQuery ) {
 			window.$ = _$;
@@ -953,7 +953,7 @@ function doScrollCheck() {
 	jQuery.ready();
 }
 
-return jQuery;
+return jQuery;	//bookmark2，构造函数返回并赋值给第22行的变量jQuery
 
 })();
 
@@ -9250,7 +9250,7 @@ jQuery.each([ "Height", "Width" ], function( i, name ) {
 
 
 // Expose jQuery to the global object
-window.jQuery = window.$ = jQuery;
+window.jQuery = window.$ = jQuery;	//定义jQuery别名$
 
 // Expose jQuery as an AMD module, but only for AMD loaders that
 // understand the issues with loading multiple versions of jQuery
@@ -9270,4 +9270,4 @@ if ( typeof define === "function" && define.amd && define.amd.jQuery ) {
 
 
 
-})( window );
+})( window );	//bookmark1，将window对象传入内部。内部访问window对象时，不需要将作用域链回退到顶层作用域。
