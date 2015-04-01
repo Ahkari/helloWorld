@@ -12,7 +12,7 @@
  * Released under the MIT, BSD, and GPL Licenses.
  *
  * Date: Mon Nov 21 21:11:03 2011 -0500
- *///2015
+ *///2015 qzguo
 (function( window, undefined ) {	//bookmark1，全部代码包裹在匿名自调用函数中，加载完jquery文件后会立即开始执行。
 
 // Use the correct document accordingly with window argument (sandbox)
@@ -38,8 +38,8 @@ var jQuery = function( selector, context ) {
 
 	// A simple way to check for HTML strings or ID strings
 	// Prioritize #id over <tag> to avoid XSS via location.hash (#9521)
-	quickExpr = /^(?:[^#<]*(<[\w\W]+>)[^>]*$|#([\w\-]*)$)/,
-
+	quickExpr = /^(?:[^#<]*(<[\w\W]+>)[^>]*$|#([\w\-]*)$)/,		//匹配html与id的正则
+			// 单词开头 ( 不匹配分组也不给分配组号   匹配除#<以外字符 *  (<www+>)  匹配除>以外 *  单词结束  |或   #([w-])*   )
 	// Check if a string has a non-whitespace character in it
 	rnotwhite = /\S/,
 
@@ -48,7 +48,7 @@ var jQuery = function( selector, context ) {
 	trimRight = /\s+$/,
 
 	// Match a standalone tag
-	rsingleTag = /^<(\w+)\s*\/?>(?:<\/\1>)?$/,
+	rsingleTag = /^<(\w+)\s*\/?>(?:<\/\1>)?$/,	
 
 	// JSON RegExp
 	rvalidchars = /^[\],:{}\s]*$/,
@@ -94,24 +94,24 @@ var jQuery = function( selector, context ) {
 	// [[Class]] -> type pairs
 	class2type = {};
 
-jQuery.fn = jQuery.prototype = {		//jQuery.fn=jQuery.prototype
+jQuery.fn = jQuery.prototype = {		//bookmark7.jQuery.fn=jQuery.prototype
 	constructor: jQuery,	//原型对象属性指向jQuery构造函数
 	init: function( selector, context, rootjQuery ) {		//原型方法jQuery.fn.init()，负责解析参数selector和context的类型并执行查找。
 		var match, elem, ret, doc;
-		
-		// Handle $(""), $(null), or $(undefined)
+		//selector可以任意类型，但只有undefined，dom元素，字符串，函数，jQuery对象，普通js对象这几种//context可不傳入。或傳入dom元素。Jq對象普通js對象等。
+		// Handle $(""), $(null), or $(undefined)	//参数selector可以转换为false
 		if ( !selector ) {
 			return this;
 		}
 
-		// Handle $(DOMElement)
+		// Handle $(DOMElement)	//参数是dom元素
 		if ( selector.nodeType ) {
 			this.context = this[0] = selector;
 			this.length = 1;
 			return this;
 		}
 
-		// The body element only exists once, optimize finding it
+		// The body element only exists once, optimize finding it  //参数是body
 		if ( selector === "body" && !context && document.body ) {
 			this.context = document;
 			this[0] = document.body;
@@ -120,7 +120,7 @@ jQuery.fn = jQuery.prototype = {		//jQuery.fn=jQuery.prototype
 			return this;
 		}
 
-		// Handle HTML strings
+		// Handle HTML strings 	//参数是其他字符串，需检测是html代码还是#id 
 		if ( typeof selector === "string" ) {
 			// Are we dealing with HTML string or an ID?
 			if ( selector.charAt(0) === "<" && selector.charAt( selector.length - 1 ) === ">" && selector.length >= 3 ) {
@@ -129,7 +129,7 @@ jQuery.fn = jQuery.prototype = {		//jQuery.fn=jQuery.prototype
 
 			} else {
 				match = quickExpr.exec( selector );
-			}
+			}	//match为正则结果，包含三个元素的数组。
 
 			// Verify a match, and that no context was specified for #id
 			if ( match && (match[1] || !context) ) {
@@ -161,19 +161,19 @@ jQuery.fn = jQuery.prototype = {		//jQuery.fn=jQuery.prototype
 
 				// HANDLE: $("#id")
 				} else {
-					elem = document.getElementById( match[2] );
+					elem = document.getElementById( match[2] );	//元素创建
 
 					// Check parentNode to catch when Blackberry 4.6 returns
 					// nodes that are no longer in the document #6963
 					if ( elem && elem.parentNode ) {
 						// Handle the case where IE and Opera return items
-						// by name instead of ID
-						if ( elem.id !== match[2] ) {
-							return rootjQuery.find( selector );
+						// by name instead of ID //兼容：某些浏览器以name代替id查找
+						if ( elem.id !== match[2] ) {	//某些原因，所找到的元素属性id与传入的值不相等。
+							return rootjQuery.find( selector );	//bookmark3：document.getElementById() 查找失败。使用自身find方法。
 						}
 
 						// Otherwise, we inject the element directly into the jQuery object
-						this.length = 1;
+						this.length = 1;	//jQuery对象是一个数组，[0]指的是DOM元素
 						this[0] = elem;
 					}
 
@@ -181,21 +181,21 @@ jQuery.fn = jQuery.prototype = {		//jQuery.fn=jQuery.prototype
 					this.selector = selector;
 					return this;
 				}
-
-			// HANDLE: $(expr, $(...))
+			//参数是表达式的情况。有分支情况。
+			// HANDLE: $(expr, $(...)) 	
 			} else if ( !context || context.jquery ) {
-				return ( context || rootjQuery ).find( selector );
+				return ( context || rootjQuery ).find( selector );	//bookmark3：selector是选择器表达式且未指定context
 
 			// HANDLE: $(expr, context)
 			// (which is just equivalent to: $(context).find(expr)
 			} else {
 				return this.constructor( context ).find( selector );
 			}
-
+		//参数是函数
 		// HANDLE: $(function)
 		// Shortcut for document ready
 		} else if ( jQuery.isFunction( selector ) ) {
-			return rootjQuery.ready( selector );
+			return rootjQuery.ready( selector );	//bookmark3：selector是函数。使用.ready执行。
 		}
 
 		if ( selector.selector !== undefined ) {
@@ -238,15 +238,15 @@ jQuery.fn = jQuery.prototype = {		//jQuery.fn=jQuery.prototype
 
 	// Take an array of elements and push it onto the stack
 	// (returning the new matched element set)
-	pushStack: function( elems, name, selector ) {
+	pushStack: function( elems, name, selector ) { //bookmark9：elems是将放入jQuery对象的元素数组，name产生元素数组elems的jQuery方法名，selector传给jQuery方法的参数。
 		// Build a new jQuery matched element set
-		var ret = this.constructor();
+		var ret = this.constructor(); //构造新的空jQuery对象，构造指针指向构造函数jQuery()
 
 		if ( jQuery.isArray( elems ) ) {
-			push.apply( ret, elems );
+			push.apply( ret, elems );	//elems合并进ret中，是数组
 
 		} else {
-			jQuery.merge( ret, elems );
+			jQuery.merge( ret, elems );	//不是数组的方法
 		}
 
 		// Add the old object onto the stack (as a reference)
@@ -266,7 +266,7 @@ jQuery.fn = jQuery.prototype = {		//jQuery.fn=jQuery.prototype
 
 	// Execute a callback for every element in the matched set.
 	// (You can seed the arguments with an array of args, but this is
-	// only used internally.)
+	// only used internally.) //bookmark8
 	each: function( callback, args ) {
 		return jQuery.each( this, callback, args );
 	},
@@ -281,7 +281,7 @@ jQuery.fn = jQuery.prototype = {		//jQuery.fn=jQuery.prototype
 		return this;
 	},
 
-	eq: function( i ) {
+	eq: function( i ) { //bookmark10
 		i = +i;
 		return i === -1 ?
 			this.slice( i ) :
@@ -289,25 +289,25 @@ jQuery.fn = jQuery.prototype = {		//jQuery.fn=jQuery.prototype
 	},
 
 	first: function() {
-		return this.eq( 0 );
+		return this.eq( 0 ); //bookmark10
 	},
 
 	last: function() {
-		return this.eq( -1 );
+		return this.eq( -1 ); //bookmark10
 	},
 
-	slice: function() {
+	slice: function() { //bookmark10
 		return this.pushStack( slice.apply( this, arguments ),
 			"slice", slice.call(arguments).join(",") );
 	},
 
-	map: function( callback ) {
+	map: function( callback ) { //bookmark9
 		return this.pushStack( jQuery.map(this, function( elem, i ) {
 			return callback.call( elem, i, elem );
 		}));
 	},
 
-	end: function() {
+	end: function() { //bookmark10.结束最近的链式中的筛选操作，并将匹配元素集合还原为之前的状态。相对于.pushStack()是出栈。
 		return this.prevObject || this.constructor(null);
 	},
 
@@ -316,12 +316,12 @@ jQuery.fn = jQuery.prototype = {		//jQuery.fn=jQuery.prototype
 	push: push,
 	sort: [].sort,
 	splice: [].splice
-};
+}; //bookmark7.jQuery.fn = jQuery.prototype = 
 
 // Give the init function the jQuery prototype for later instantiation
 jQuery.fn.init.prototype = jQuery.fn;	//原型覆盖。
 
-jQuery.extend = jQuery.fn.extend = function() {	//用于合并两个或多个对象的属性到第一个方法
+jQuery.extend = jQuery.fn.extend = function() {	//bookmark6:用于合并两个或多个对象的属性到第一个方法 
 	var options, name, src, copy, copyIsArray, clone,
 		target = arguments[0] || {},
 		i = 1,
@@ -493,7 +493,7 @@ jQuery.extend({	//一堆静态属性和方法。388-892
 		return jQuery.type(obj) === "function";
 	},
 
-	isArray: Array.isArray || function( obj ) {
+	isArray: Array.isArray || function( obj ) { //判断是否为数组
 		return jQuery.type(obj) === "array";
 	},
 
@@ -624,11 +624,11 @@ jQuery.extend({	//一堆静态属性和方法。388-892
 		return elem.nodeName && elem.nodeName.toUpperCase() === name.toUpperCase();
 	},
 
-	// args is for internal usage only
-	each: function( object, callback, args ) {
+	// args is for internal usage only 	//bookmark8
+	each: function( object, callback, args ) {	
 		var name, i = 0,
 			length = object.length,
-			isObj = length === undefined || jQuery.isFunction( object );
+			isObj = length === undefined || jQuery.isFunction( object ); //根据是数组还是对象，决定遍历方式
 
 		if ( args ) {
 			if ( isObj ) {
@@ -662,7 +662,7 @@ jQuery.extend({	//一堆静态属性和方法。388-892
 			}
 		}
 
-		return object;
+		return object; //当前jQuery对象作为参数传入，这里返回该参数，以支持链式语法。
 	},
 
 	// Use native String.trim function wherever possible
@@ -913,7 +913,7 @@ if ( rnotwhite.test( "\xA0" ) ) {
 	trimLeft = /^[\s\xA0]+/;
 	trimRight = /[\s\xA0]+$/;
 }
-
+//bookmark3：定义rootjQuery
 // All jQuery objects should point back to these
 rootjQuery = jQuery(document);
 
@@ -6088,8 +6088,8 @@ function cloneFixAttributes( src, dest ) {
 	// gets copied too
 	dest.removeAttribute( jQuery.expando );
 }
-
-jQuery.buildFragment = function( args, nodes, scripts ) {
+//bookmark4
+jQuery.buildFragment = function( args, nodes, scripts ) {	//args數組，含有待转换为dom元素的html代码。nodes数组，含文档对象，JQ对象或dom元素，用于修正。scripts数组，用于存放html代码中script元素。
 	var fragment, cacheable, cacheresults, doc,
 	first = args[ 0 ];
 
@@ -6259,7 +6259,7 @@ jQuery.extend({
 		// Return the cloned set
 		return clone;
 	},
-
+	//bookmark5:clean方法
 	clean: function( elems, context, fragment, scripts ) {
 		var checkScriptType;
 
@@ -6289,7 +6289,7 @@ jQuery.extend({
 					// Fix "XHTML"-style tags in all browsers
 					elem = elem.replace(rxhtmlTag, "<$1></$2>");
 
-					// Trim whitespace, otherwise indexOf won't work as expected
+					// Trim whitespace, otherwise indexOf won't work as expected 	//创建临时div元素
 					var tag = ( rtagName.exec( elem ) || ["", ""] )[1].toLowerCase(),
 						wrap = wrapMap[ tag ] || wrapMap._default,
 						depth = wrap[0],
@@ -6303,7 +6303,7 @@ jQuery.extend({
 						// Use a fragment created with the owner document
 						createSafeFragment( context ).appendChild( div );
 					}
-
+					//利用innerHTML属性将html代码转换为dom元素。然后剥离父元素得到转换后的dom元素。
 					// Go to html and back, then peel off extra wrappers
 					div.innerHTML = wrap[1] + elem + wrap[2];
 

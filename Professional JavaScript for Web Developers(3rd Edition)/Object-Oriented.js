@@ -267,7 +267,7 @@ function SubType(name,age){
 	SuperType.call(this.name);
 	this.age=age;
 }
-initProp(SubType,SuperType);
+initProp(SubType,SuperType);                                                                                                                                                                      
 SubType.propotype.sayAge=function(){
 	alert(this.age);
 };
