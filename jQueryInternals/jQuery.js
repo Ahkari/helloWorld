@@ -28,10 +28,10 @@ var jQuery = function( selector, context ) {
 	},
 	//	一堆局部变量声明，29-96
 	// Map over jQuery in case of overwrite
-	_jQuery = window.jQuery,
+	_jQuery = window.jQuery, 	//bookmark11.jq初始化时把当前可能存在的jQuery存给_jQuery
 
 	// Map over the $ in case of overwrite
-	_$ = window.$,
+	_$ = window.$,	//bookmark11.把当前可能的$存给_$
 
 	// A central reference to the root jQuery(document)
 	rootjQuery,
@@ -41,29 +41,29 @@ var jQuery = function( selector, context ) {
 	quickExpr = /^(?:[^#<]*(<[\w\W]+>)[^>]*$|#([\w\-]*)$)/,		//匹配html与id的正则
 			// 单词开头 ( 不匹配分组也不给分配组号   匹配除#<以外字符 *  (<www+>)  匹配除>以外 *  单词结束  |或   #([w-])*   )
 	// Check if a string has a non-whitespace character in it
-	rnotwhite = /\S/,
+	rnotwhite = /\S/, //jQuery.trim。匹配非空格。
 
 	// Used for trimming whitespace
-	trimLeft = /^\s+/,
-	trimRight = /\s+$/,
+	trimLeft = /^\s+/,  //trim。匹配开头的一个或多个空格。^能匹配空格，和\b不同。
+	trimRight = /\s+$/,  //trim。匹配结尾的一个多个空格。$能匹配空格，和\b不同。
 
 	// Match a standalone tag
 	rsingleTag = /^<(\w+)\s*\/?>(?:<\/\1>)?$/,	
 
-	// JSON RegExp
+	// JSON RegExp //bookmark12.JSON字符串解析所用到的正则。
 	rvalidchars = /^[\],:{}\s]*$/,
 	rvalidescape = /\\(?:["\\\/bfnrt]|u[0-9a-fA-F]{4})/g,
 	rvalidtokens = /"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g,
 	rvalidbraces = /(?:^|:|,)(?:\s*\[)+/g,
 
-	// Useragent RegExp
+	// Useragent RegExp //bookmark15.浏览器嗅探时用于解析用户代理navigator.userAgent的四个正则。
 	rwebkit = /(webkit)[ \/]([\w.]+)/,
 	ropera = /(opera)(?:.*version)?[ \/]([\w.]+)/,
 	rmsie = /(msie) ([\w.]+)/,
 	rmozilla = /(mozilla)(?:.*? rv:([\w.]+))?/,
 
 	// Matches dashed string for camelizing
-	rdashAlpha = /-([a-z]|[0-9])/ig,
+	rdashAlpha = /-([a-z]|[0-9])/ig,   //匹配如background-color等
 	rmsPrefix = /^-ms-/,
 
 	// Used by jQuery.camelCase as callback to replace()
@@ -72,7 +72,7 @@ var jQuery = function( selector, context ) {
 	},
 
 	// Keep a UserAgent string for use with jQuery.browser
-	userAgent = navigator.userAgent,
+	userAgent = navigator.userAgent, //bookmark15
 
 	// For matching the engine and version of the browser
 	browserMatch,
@@ -84,15 +84,15 @@ var jQuery = function( selector, context ) {
 	DOMContentLoaded,
 
 	// Save a reference to some core methods
-	toString = Object.prototype.toString,
+	toString = Object.prototype.toString, //原型方法toString
 	hasOwn = Object.prototype.hasOwnProperty,
-	push = Array.prototype.push,
+	push = Array.prototype.push, //原生push方法，bookmark13
 	slice = Array.prototype.slice,
-	trim = String.prototype.trim,
+	trim = String.prototype.trim, //jQuery.trim
 	indexOf = Array.prototype.indexOf,
 
 	// [[Class]] -> type pairs
-	class2type = {};
+	class2type = {}; //内部对象类，映射类型。#894~
 
 jQuery.fn = jQuery.prototype = {		//bookmark7.jQuery.fn=jQuery.prototype
 	constructor: jQuery,	//原型对象属性指向jQuery构造函数
@@ -386,7 +386,7 @@ jQuery.extend = jQuery.fn.extend = function() {	//bookmark6:用于合并两个�
 };
 
 jQuery.extend({	//一堆静态属性和方法。388-892
-	noConflict: function( deep ) {
+	noConflict: function( deep ) {	//bookmark11
 		if ( window.$ === jQuery ) {
 			window.$ = _$;
 		}
@@ -508,11 +508,11 @@ jQuery.extend({	//一堆静态属性和方法。388-892
 
 	type: function( obj ) {
 		return obj == null ?
-			String( obj ) :
-			class2type[ toString.call(obj) ] || "object";
+			String( obj ) : 	//为null就通过String转换为null或undefined
+			class2type[ toString.call(obj) ] || "object"; 	//
 	},
 
-	isPlainObject: function( obj ) {
+	isPlainObject: function( obj ) {  //是否是new Object()或对象字面量{}创建的对象。
 		// Must be an Object.
 		// Because of IE, we also have to check the presence of the constructor property.
 		// Make sure that DOM nodes and window objects don't pass through, as well
@@ -552,7 +552,7 @@ jQuery.extend({	//一堆静态属性和方法。388-892
 		throw new Error( msg );
 	},
 
-	parseJSON: function( data ) {
+	parseJSON: function( data ) { //bookmark12.接受json字符串，返回解析后的js对象。
 		if ( typeof data !== "string" || !data ) {
 			return null;
 		}
@@ -561,13 +561,13 @@ jQuery.extend({	//一堆静态属性和方法。388-892
 		data = jQuery.trim( data );
 
 		// Attempt to parse using the native JSON parser first
-		if ( window.JSON && window.JSON.parse ) {
+		if ( window.JSON && window.JSON.parse ) { //浏览器具有原生JSON.parse方法。
 			return window.JSON.parse( data );
 		}
 
 		// Make sure the incoming data is actual JSON
 		// Logic borrowed from http://json.org/json2.js
-		if ( rvalidchars.test( data.replace( rvalidescape, "@" )
+		if ( rvalidchars.test( data.replace( rvalidescape, "@" ) //不支持JSON.parse()的浏览器中，检查字符串，再return
 			.replace( rvalidtokens, "]" )
 			.replace( rvalidbraces, "")) ) {
 
@@ -577,15 +577,15 @@ jQuery.extend({	//一堆静态属性和方法。388-892
 		jQuery.error( "Invalid JSON: " + data );
 	},
 
-	// Cross-browser xml parsing
-	parseXML: function( data ) {
+	// Cross-browser xml parsing //bookmark12
+	parseXML: function( data ) { 
 		var xml, tmp;
 		try {
-			if ( window.DOMParser ) { // Standard
+			if ( window.DOMParser ) { // Standard //IE 9+
 				tmp = new DOMParser();
 				xml = tmp.parseFromString( data , "text/xml" );
 			} else { // IE
-				xml = new ActiveXObject( "Microsoft.XMLDOM" );
+				xml = new ActiveXObject( "Microsoft.XMLDOM" ); //IE 9-
 				xml.async = "false";
 				xml.loadXML( data );
 			}
@@ -603,7 +603,7 @@ jQuery.extend({	//一堆静态属性和方法。388-892
 	// Evaluates a script in a global context
 	// Workarounds based on findings by Jim Driscoll
 	// http://weblogs.java.net/blog/driscoll/archive/2009/09/08/eval-javascript-global-context
-	globalEval: function( data ) {
+	globalEval: function( data ) { //在全局作用域中执行javascript代码
 		if ( data && rnotwhite.test( data ) ) {
 			// We use execScript on Internet Explorer
 			// We use an anonymous function so that context is window
@@ -616,12 +616,12 @@ jQuery.extend({	//一堆静态属性和方法。388-892
 
 	// Convert dashed to camelCase; used by the css and data modules
 	// Microsoft forgot to hump their vendor prefix (#9572)
-	camelCase: function( string ) {
+	camelCase: function( string ) { //css等连字符属性转换为驼峰命名。
 		return string.replace( rmsPrefix, "ms-" ).replace( rdashAlpha, fcamelCase );
 	},
 
 	nodeName: function( elem, name ) {
-		return elem.nodeName && elem.nodeName.toUpperCase() === name.toUpperCase();
+		return elem.nodeName && elem.nodeName.toUpperCase() === name.toUpperCase(); //elem的nodename和name是否相等
 	},
 
 	// args is for internal usage only 	//bookmark8
@@ -665,7 +665,7 @@ jQuery.extend({	//一堆静态属性和方法。388-892
 		return object; //当前jQuery对象作为参数传入，这里返回该参数，以支持链式语法。
 	},
 
-	// Use native String.trim function wherever possible
+	// Use native String.trim function wherever possible //浏览器支持原生就trim，否则就自己搞。
 	trim: trim ?
 		function( text ) {
 			return text == null ?
@@ -680,8 +680,8 @@ jQuery.extend({	//一堆静态属性和方法。388-892
 				text.toString().replace( trimLeft, "" ).replace( trimRight, "" );
 		},
 
-	// results is for internal usage only
-	makeArray: function( array, results ) {
+	// results is for internal usage only //bookmark13
+	makeArray: function( array, results ) { //将类数组对象转换为真正的数组
 		var ret = results || [];
 
 		if ( array != null ) {
@@ -699,7 +699,7 @@ jQuery.extend({	//一堆静态属性和方法。388-892
 		return ret;
 	},
 
-	inArray: function( elem, array, i ) {
+	inArray: function( elem, array, i ) { 	//bookmark13.在数组中查找指定的元素并返回其下标
 		var len;
 
 		if ( array ) {
@@ -721,7 +721,7 @@ jQuery.extend({	//一堆静态属性和方法。388-892
 		return -1;
 	},
 
-	merge: function( first, second ) {
+	merge: function( first, second ) {  //bookmark13.合并两个数组的元素到第一个数组中。
 		var i = first.length,
 			j = 0;
 
@@ -741,7 +741,7 @@ jQuery.extend({	//一堆静态属性和方法。388-892
 		return first;
 	},
 
-	grep: function( elems, callback, inv ) {
+	grep: function( elems, callback, inv ) { //bookmark13.查找数组中满足过滤函数的元素
 		var ret = [], retVal;
 		inv = !!inv;
 
@@ -791,11 +791,11 @@ jQuery.extend({	//一堆静态属性和方法。388-892
 	},
 
 	// A global GUID counter for objects
-	guid: 1,
+	guid: 1, //bookmark14.全局计数器guid。用于在缓存模块中唯一标识每个事件监听函数。
 
 	// Bind a function to a context, optionally partially applying any
 	// arguments.
-	proxy: function( fn, context ) {
+	proxy: function( fn, context ) { //接受一个函数，返回持有特定上下文的新函数
 		if ( typeof context === "string" ) {
 			var tmp = fn[ context ];
 			context = fn;
@@ -822,7 +822,7 @@ jQuery.extend({	//一堆静态属性和方法。388-892
 
 	// Mutifunctional method to get and set values to a collection
 	// The value/s can optionally be executed if it's a function
-	access: function( elems, key, value, exec, fn, pass ) {
+	access: function( elems, key, value, exec, fn, pass ) { //从.att()和p.pop()以及jQuery.fn.css而来。
 		var length = elems.length;
 
 		// Setting many attributes
@@ -856,7 +856,7 @@ jQuery.extend({	//一堆静态属性和方法。388-892
 	//工具方法Utilities
 	// Use of jQuery.browser is frowned upon.
 	// More details: http://docs.jquery.com/Utilities/jQuery.browser
-	uaMatch: function( ua ) {
+	uaMatch: function( ua ) { //bookmark15
 		ua = ua.toLowerCase();
 
 		var match = rwebkit.exec( ua ) ||
@@ -865,7 +865,7 @@ jQuery.extend({	//一堆静态属性和方法。388-892
 			ua.indexOf("compatible") < 0 && rmozilla.exec( ua ) ||
 			[];
 
-		return { browser: match[1] || "", version: match[2] || "0" };
+		return { browser: match[1] || "", version: match[2] || "0" }; //返回的{browser:分组1或字符串,verson:分组2或字符串"0"}
 	},
 
 	sub: function() {
@@ -892,15 +892,15 @@ jQuery.extend({	//一堆静态属性和方法。388-892
 	browser: {}
 });
 
-// Populate the class2type map
+// Populate the class2type map //类型映射。转换为小写字母。
 jQuery.each("Boolean Number String Function Array Date RegExp Object".split(" "), function(i, name) {
 	class2type[ "[object " + name + "]" ] = name.toLowerCase();
 });
 
-browserMatch = jQuery.uaMatch( userAgent );
+browserMatch = jQuery.uaMatch( userAgent );  //bookmark15
 if ( browserMatch.browser ) {
 	jQuery.browser[ browserMatch.browser ] = true;
-	jQuery.browser.version = browserMatch.version;
+	jQuery.browser.version = browserMatch.version; //把解析结果重新封装为jQuery.browser
 }
 
 // Deprecated, use jQuery.browser.webkit instead
@@ -909,7 +909,7 @@ if ( jQuery.browser.webkit ) {
 }
 
 // IE doesn't match non-breaking spaces with \s
-if ( rnotwhite.test( "\xA0" ) ) {
+if ( rnotwhite.test( "\xA0" ) ) { //IE6匹配无间断空格\xA0
 	trimLeft = /^[\s\xA0]+/;
 	trimRight = /[\s\xA0]+$/;
 }
@@ -1679,7 +1679,7 @@ jQuery.extend({
 			// Only DOM nodes need a new unique ID for each element since their data
 			// ends up in the global cache
 			if ( isNode ) {
-				elem[ internalKey ] = id = ++jQuery.uuid;
+				elem[ internalKey ] = id = ++jQuery.uuid;  //bookmark14.标记dom元素。赋予uuid
 			} else {
 				id = internalKey;
 			}
@@ -2865,7 +2865,7 @@ jQuery.event = {
 
 		// Make sure that the handler has a unique ID, used to find/remove it later
 		if ( !handler.guid ) {
-			handler.guid = jQuery.guid++;
+			handler.guid = jQuery.guid++; //bookmark14.自增
 		}
 
 		// Init the element's event structure and main handler, if this is the first
@@ -3863,7 +3863,7 @@ jQuery.each( ("blur focus focusin focusout load resize scroll unload click dblcl
  *  More information: http://sizzlejs.com/
  */
 (function(){
-
+//chunker用来提取块表达式和块间关系符。直到全部提去玩不或遇到下一个并列选择器表达式为止。称为分割器，是Sizzle中最长最复杂最关键的正则。
 var chunker = /((?:\((?:\([^()]+\)|[^()]+)+\)|\[(?:\[[^\[\]]*\]|['"][^'"]*['"]|[^\[\]'"]+)+\]|\\.|[^ >+~,(\[\\]+)+|[>+~])(\s*,\s*)?((?:.|\r|\n)*)/g,
 	expando = "sizcache" + (Math.random() + '').replace('.', ''),
 	done = 0,
@@ -3883,28 +3883,28 @@ var chunker = /((?:\((?:\([^()]+\)|[^()]+)+\)|\[(?:\[[^\[\]]*\]|['"][^'"]*['"]|[
 	return 0;
 });
 
-var Sizzle = function( selector, context, results, seed ) {
-	results = results || [];
+var Sizzle = function( selector, context, results, seed ) { //bookmark16.定义Sizzle选择器。
+	results = results || []; //把查找到的元素添加到其中。
 	context = context || document;
-
+	//四个参数。selector是css选择器表达式，context是DOM元素或文档对象，作为查找的上下文，限定范围。results是可选的数组。参数seed可选。
 	var origContext = context;
 
 	if ( context.nodeType !== 1 && context.nodeType !== 9 ) {
-		return [];
+		return [];	//context不是dom元素或上下文时，此次查询取消。
 	}
 	
 	if ( !selector || typeof selector !== "string" ) {
-		return results;
+		return results; 	//selector是空字符串，或非字符串。
 	}
 
-	var m, set, checkSet, extra, ret, cur, pop, i,
+	var m, set, checkSet, extra, ret, cur, pop, i, //局部变量们
 		prune = true,
 		contextXML = Sizzle.isXML( context ),
 		parts = [],
 		soFar = selector;
 	
 	// Reset the position of the chunker regexp (start from head)
-	do {
+	do { 	//bookmark16.解析块表达式和块间关系符
 		chunker.exec( "" );
 		m = chunker.exec( soFar );
 
@@ -3920,7 +3920,7 @@ var Sizzle = function( selector, context, results, seed ) {
 		}
 	} while ( m );
 
-	if ( parts.length > 1 && origPOS.exec( selector ) ) {
+	if ( parts.length > 1 && origPOS.exec( selector ) ) { //bookmark16.如果存在位置伪类，则从左向右查找
 
 		if ( parts.length === 2 && Expr.relative[ parts[0] ] ) {
 			set = posProcess( parts[0] + parts[1], context, seed );
@@ -4235,7 +4235,7 @@ var Expr = Sizzle.selectors = {
 		ATTR: /\[\s*((?:[\w\u00c0-\uFFFF\-]|\\.)+)\s*(?:(\S?=)\s*(?:(['"])(.*?)\3|(#?(?:[\w\u00c0-\uFFFF\-]|\\.)*)|)|)\s*\]/,
 		TAG: /^((?:[\w\u00c0-\uFFFF\*\-]|\\.)+)/,
 		CHILD: /:(only|nth|last|first)-child(?:\(\s*(even|odd|(?:[+\-]?\d+|(?:[+\-]?\d*)?n\s*(?:[+\-]\s*\d+)?))\s*\))?/,
-		POS: /:(nth|eq|gt|lt|first|last|even|odd)(?:\((\d*)\))?(?=[^\-]|$)/,
+		POS: /:(nth|eq|gt|lt|first|last|even|odd)(?:\((\d*)\))?(?=[^\-]|$)/, //bookmark16.Sizzle所支持的位置伪类
 		PSEUDO: /:((?:[\w\u00c0-\uFFFF\-]|\\.)+)(?:\((['"]?)((?:\([^\)]+\)|[^\(\)]*)+)\2\))?/
 	},
 
@@ -4755,7 +4755,7 @@ var Expr = Sizzle.selectors = {
 	}
 };
 
-var origPOS = Expr.match.POS,
+var origPOS = Expr.match.POS, //bookmark16.origPOS的值取自。
 	fescape = function(all, num){
 		return "\\" + (num - 0 + 1);
 	};
@@ -6464,7 +6464,7 @@ var ralpha = /alpha\([^)]*\)/i,
 	getComputedStyle,
 	currentStyle;
 
-jQuery.fn.css = function( name, value ) {
+jQuery.fn.css = function( name, value ) { 
 	// Setting 'undefined' is a no-op
 	if ( arguments.length === 2 && value === undefined ) {
 		return this;
