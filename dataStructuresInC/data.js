@@ -90,6 +90,82 @@ var count=0;
 // var arrA_shift=[];
 hanoi(n,arrA,arrB,arrC);
 
+//队列
+
+//串
+//Q1：求主串中和子串相等的字符起始位置
+//func1 原生方法
+function indexChuan(main,child){
+	return main.indexOf(child);
+}
+var strMain="Lily why?";
+var strChild="ly w";
+console.log(indexChuan(strMain,strChild));
+//func2 模拟其他语言
+function indexChuan(main,child){
+	var lenM=main.length;
+	var lenC=child.length;
+	for (i=0;i<lenM;i++){
+		var main_sub=main.substring(i,i+lenC);
+		if (main_sub==child){
+			return i;
+		}
+	}
+}
+var strMain="Lily why?";
+var strChild="ly w";
+console.log(indexChuan(strMain,strChild));
+
+//数组和广义表
+
+//树和二叉树
+
+//树和森林
+
+//图
+
+//哈希表
+
+//插入排序
+
+//折半插入排序
+
+//2-路插入排序
+
+//希尔排序
+
+//冒泡排序
+
+//快速排序
+
+//选择排序
+
+//树形选择排序
+
+//堆排序
+
+//归并排序s
+
+//基数排序
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
