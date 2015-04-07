@@ -994,7 +994,7 @@ function createFlags( flags ) {
  *	stopOnFalse:	interrupt callings when a callback returns false
  *
  */
-jQuery.Callbacks = function( flags ) {
+jQuery.Callbacks = function( flags ) { 
 
 	// Convert flags from String-formatted to Object-formatted
 	// (we check in cache first)
@@ -1015,7 +1015,7 @@ jQuery.Callbacks = function( flags ) {
 		// Index of currently firing callback (modified by remove if needed)
 		firingIndex,
 		// Add one or several callbacks to the list
-		add = function( args ) {
+		add = function( args ) { //添加一个或多个回调函数到数组list中。
 			var i,
 				length,
 				elem,
@@ -1036,7 +1036,7 @@ jQuery.Callbacks = function( flags ) {
 			}
 		},
 		// Fire callbacks
-		fire = function( context, args ) {
+		fire = function( context, args ) { //使用指定的上下文context和参数args调用list中的回调函数
 			args = args || [];
 			memory = !flags.memory || [ context, args ];
 			firing = true;
@@ -1068,7 +1068,7 @@ jQuery.Callbacks = function( flags ) {
 		// Actual Callbacks object
 		self = {
 			// Add a callback or a collection of callbacks to the list
-			add: function() {
+			add: function() { //callbacks.add()用于添加一个或一组回调函数至回调函数列表。
 				if ( list ) {
 					var length = list.length;
 					add( arguments );
@@ -1087,7 +1087,7 @@ jQuery.Callbacks = function( flags ) {
 				return this;
 			},
 			// Remove a callback from the list
-			remove: function() {
+			remove: function() { //用于从回调函数列表中移除一个或一组回调函数。
 				if ( list ) {
 					var args = arguments,
 						argIndex = 0,
@@ -1157,7 +1157,7 @@ jQuery.Callbacks = function( flags ) {
 				return !stack;
 			},
 			// Call all callbacks with the given context and arguments
-			fireWith: function( context, args ) {
+			fireWith: function( context, args ) { 
 				if ( stack ) {
 					if ( firing ) {
 						if ( !flags.once ) {
@@ -3865,14 +3865,14 @@ jQuery.each( ("blur focus focusin focusout load resize scroll unload click dblcl
 (function(){
 //chunker用来提取块表达式和块间关系符。直到全部提去玩不或遇到下一个并列选择器表达式为止。称为分割器，是Sizzle中最长最复杂最关键的正则。
 var chunker = /((?:\((?:\([^()]+\)|[^()]+)+\)|\[(?:\[[^\[\]]*\]|['"][^'"]*['"]|[^\[\]'"]+)+\]|\\.|[^ >+~,(\[\\]+)+|[>+~])(\s*,\s*)?((?:.|\r|\n)*)/g,
-	expando = "sizcache" + (Math.random() + '').replace('.', ''),
-	done = 0,
-	toString = Object.prototype.toString,
-	hasDuplicate = false,
-	baseHasDuplicate = true,
-	rBackslash = /\\/g,
-	rReturn = /\r\n/g,
-	rNonWord = /\W/;
+	expando = "sizcache" + (Math.random() + '').replace('.', ''),         //下面分段分析chunker
+	done = 0,                                //      \((?:\([^()]+\)|[^()]+)+\))部分，匹配(lily)或(lily(ahkari))
+	toString = Object.prototype.toString,    //      \[(?:\[[^\[\]]*\]|['"][^'"]*['"]|[^\[\]'"]+)+\]部分，匹配[[]],[""],['']或[]
+	hasDuplicate = false,                    //      
+	baseHasDuplicate = true,                 //
+	rBackslash = /\\/g,                      // 
+	rReturn = /\r\n/g,                       //
+	rNonWord = /\W/;                         //
 
 // Here we check if the JavaScript engine is using some sort of
 // optimization where it does not always call our comparision
@@ -3937,23 +3937,23 @@ var Sizzle = function( selector, context, results, seed ) { //bookmark16.定义S
 					selector += parts.shift();
 				}
 				
-				set = posProcess( selector, set, seed );
+				set = posProcess( selector, set, seed ); //存在伪类。
 			}
 		}
 
-	} else {
+	} else { //不存在伪类的情况，从右向左查找。
 		// Take a shortcut and set the context if the root selector is an ID
 		// (but not if it'll be faster if the inner selector is an ID)
 		if ( !seed && parts.length > 1 && context.nodeType === 9 && !contextXML &&
 				Expr.match.ID.test(parts[0]) && !Expr.match.ID.test(parts[parts.length - 1]) ) {
-
+			//和id相关时修正上下文为该元素
 			ret = Sizzle.find( parts.shift(), context, contextXML );
 			context = ret.expr ?
 				Sizzle.filter( ret.expr, ret.set )[0] :
 				ret.set[0];
 		}
 
-		if ( context ) {
+		if ( context ) { //从右向左查找
 			ret = seed ?
 				{ expr: parts.pop(), set: makeArray(seed) } :
 				Sizzle.find( parts.pop(), parts.length === 1 && (parts[0] === "~" || parts[0] === "+") && context.parentNode ? context.parentNode : context, contextXML );
@@ -4030,7 +4030,7 @@ var Sizzle = function( selector, context, results, seed ) { //bookmark16.定义S
 	return results;
 };
 
-Sizzle.uniqueSort = function( results ) {
+Sizzle.uniqueSort = function( results ) { //对元素集合中的元素按照出现在文档中的顺序进行排序，并删除重复元素。
 	if ( sortOrder ) {
 		hasDuplicate = baseHasDuplicate;
 		results.sort( sortOrder );
@@ -4055,7 +4055,7 @@ Sizzle.matchesSelector = function( node, expr ) {
 	return Sizzle( expr, null, null, [node] ).length > 0;
 };
 
-Sizzle.find = function( expr, context, isXML ) {
+Sizzle.find = function( expr, context, isXML ) { //负责查找与块表达式匹配的元素集合。
 	var set, i, len, match, type, left;
 
 	if ( !expr ) {
@@ -4090,7 +4090,7 @@ Sizzle.find = function( expr, context, isXML ) {
 	return { set: set, expr: expr };
 };
 
-Sizzle.filter = function( expr, set, inplace, not ) {
+Sizzle.filter = function( expr, set, inplace, not ) { //负责用块表达式过滤元素集合。
 	var match, anyFound,
 		type, found, item, filter, left,
 		i, pass,
@@ -4226,17 +4226,17 @@ var getText = Sizzle.getText = function( elem ) {
 };
 
 var Expr = Sizzle.selectors = {
-	order: [ "ID", "NAME", "TAG" ],
+	order: [ "ID", "NAME", "TAG" ], //块表达式的查找顺序。
 
 	match: {
-		ID: /#((?:[\w\u00c0-\uFFFF\-]|\\.)+)/,
-		CLASS: /\.((?:[\w\u00c0-\uFFFF\-]|\\.)+)/,
-		NAME: /\[name=['"]*((?:[\w\u00c0-\uFFFF\-]|\\.)+)['"]*\]/,
-		ATTR: /\[\s*((?:[\w\u00c0-\uFFFF\-]|\\.)+)\s*(?:(\S?=)\s*(?:(['"])(.*?)\3|(#?(?:[\w\u00c0-\uFFFF\-]|\\.)*)|)|)\s*\]/,
-		TAG: /^((?:[\w\u00c0-\uFFFF\*\-]|\\.)+)/,
-		CHILD: /:(only|nth|last|first)-child(?:\(\s*(even|odd|(?:[+\-]?\d+|(?:[+\-]?\d*)?n\s*(?:[+\-]\s*\d+)?))\s*\))?/,
-		POS: /:(nth|eq|gt|lt|first|last|even|odd)(?:\((\d*)\))?(?=[^\-]|$)/, //bookmark16.Sizzle所支持的位置伪类
-		PSEUDO: /:((?:[\w\u00c0-\uFFFF\-]|\\.)+)(?:\((['"]?)((?:\([^\)]+\)|[^\(\)]*)+)\2\))?/
+		ID: /#((?:[\w\u00c0-\uFFFF\-]|\\.)+)/, //ID正则
+		CLASS: /\.((?:[\w\u00c0-\uFFFF\-]|\\.)+)/, //CLASS正则。用于匹配简单表达式.class
+		NAME: /\[name=['"]*((?:[\w\u00c0-\uFFFF\-]|\\.)+)['"]*\]/, //input[name:"value"]正则
+		ATTR: /\[\s*((?:[\w\u00c0-\uFFFF\-]|\\.)+)\s*(?:(\S?=)\s*(?:(['"])(.*?)\3|(#?(?:[\w\u00c0-\uFFFF\-]|\\.)*)|)|)\s*\]/, //[attr="value"]
+		TAG: /^((?:[\w\u00c0-\uFFFF\*\-]|\\.)+)/, //tag正则
+		CHILD: /:(only|nth|last|first)-child(?:\(\s*(even|odd|(?:[+\-]?\d+|(?:[+\-]?\d*)?n\s*(?:[+\-]\s*\d+)?))\s*\))?/, //匹配:nth-child()
+		POS: /:(nth|eq|gt|lt|first|last|even|odd)(?:\((\d*)\))?(?=[^\-]|$)/, //bookmark16.Sizzle所支持的位置伪类 :eq(index)
+		PSEUDO: /:((?:[\w\u00c0-\uFFFF\-]|\\.)+)(?:\((['"]?)((?:\([^\)]+\)|[^\(\)]*)+)\2\))?/  // :之后的普通伪类。
 	},
 
 	leftMatch: {},
@@ -4255,8 +4255,8 @@ var Expr = Sizzle.selectors = {
 		}
 	},
 
-	relative: {
-		"+": function(checkSet, part){
+	relative: { 
+		"+": function(checkSet, part){ //bookmark17
 			var isPartStr = typeof part === "string",
 				isTag = isPartStr && !rNonWord.test( part ),
 				isPartStrNotTag = isPartStr && !isTag;
@@ -4280,7 +4280,7 @@ var Expr = Sizzle.selectors = {
 			}
 		},
 
-		">": function( checkSet, part ) {
+		">": function( checkSet, part ) { //bookmark17
 			var elem,
 				isPartStr = typeof part === "string",
 				i = 0,
@@ -4315,7 +4315,7 @@ var Expr = Sizzle.selectors = {
 			}
 		},
 
-		"": function(checkSet, part, isXML){
+		"": function(checkSet, part, isXML){ //bookmark17
 			var nodeCheck,
 				doneName = done++,
 				checkFn = dirCheck;
@@ -4329,7 +4329,7 @@ var Expr = Sizzle.selectors = {
 			checkFn( "parentNode", part, doneName, checkSet, nodeCheck, isXML );
 		},
 
-		"~": function( checkSet, part, isXML ) {
+		"~": function( checkSet, part, isXML ) { //bookmark17
 			var nodeCheck,
 				doneName = done++,
 				checkFn = dirCheck;
@@ -4344,8 +4344,8 @@ var Expr = Sizzle.selectors = {
 		}
 	},
 
-	find: {
-		ID: function( match, context, isXML ) {
+	find: { 
+		ID: function( match, context, isXML ) { //查id
 			if ( typeof context.getElementById !== "undefined" && !isXML ) {
 				var m = context.getElementById(match[1]);
 				// Check parentNode to catch when Blackberry 4.6 returns
@@ -4354,7 +4354,7 @@ var Expr = Sizzle.selectors = {
 			}
 		},
 
-		NAME: function( match, context ) {
+		NAME: function( match, context ) { //查name
 			if ( typeof context.getElementsByName !== "undefined" ) {
 				var ret = [],
 					results = context.getElementsByName( match[1] );
@@ -4369,14 +4369,14 @@ var Expr = Sizzle.selectors = {
 			}
 		},
 
-		TAG: function( match, context ) {
+		TAG: function( match, context ) { //查tag
 			if ( typeof context.getElementsByTagName !== "undefined" ) {
 				return context.getElementsByTagName( match[1] );
 			}
 		}
 	},
-	preFilter: {
-		CLASS: function( match, curLoop, inplace, result, not, isXML ) {
+	preFilter: { //预过滤函数。用于在过滤函数前修正与过滤操作相关的参数。
+		CLASS: function( match, curLoop, inplace, result, not, isXML ) { 
 			match = " " + match[1].replace( rBackslash, "" ) + " ";
 
 			if ( isXML ) {
@@ -4826,7 +4826,7 @@ if ( document.documentElement.compareDocumentPosition ) {
 	};
 
 } else {
-	sortOrder = function( a, b ) {
+	sortOrder = function( a, b ) { //比较ab在文档中的位置。a前返回-1，a后返回1，相等返回0
 		// The nodes are identical, we can exit early
 		if ( a === b ) {
 			hasDuplicate = true;
@@ -4857,7 +4857,7 @@ if ( document.documentElement.compareDocumentPosition ) {
 		}
 
 		// Otherwise they're somewhere else in the tree so we need
-		// to build up a full list of the parentNodes for comparison
+		// to build up a full list of the parentNodes for comparison //查找a和b的祖先元素
 		while ( cur ) {
 			ap.unshift( cur );
 			cur = cur.parentNode;
@@ -4870,7 +4870,7 @@ if ( document.documentElement.compareDocumentPosition ) {
 			cur = cur.parentNode;
 		}
 
-		al = ap.length;
+		al = ap.length; //比较祖先元素的文档位置
 		bl = bp.length;
 
 		// Start walking down the tree looking for a discrepancy
@@ -4886,7 +4886,7 @@ if ( document.documentElement.compareDocumentPosition ) {
 			siblingCheck( ap[i], b, 1 );
 	};
 
-	siblingCheck = function( a, b, ret ) {
+	siblingCheck = function( a, b, ret ) { //通过遍历，确定元素a和b的位置。
 		if ( a === b ) {
 			return ret;
 		}
@@ -5143,7 +5143,7 @@ if ( document.querySelectorAll ) {
 	}
 })();
 
-(function(){
+(function(){ 	//
 	var div = document.createElement("div");
 
 	div.innerHTML = "<div class='test e'></div><div class='test'></div>";
@@ -5159,9 +5159,9 @@ if ( document.querySelectorAll ) {
 
 	if ( div.getElementsByClassName("e").length === 1 ) {
 		return;
-	}
+	}      //上面都是测试浏览器是否支持getElementByClassName()。构造dom结构来检测。
 	
-	Expr.order.splice(1, 0, "CLASS");
+	Expr.order.splice(1, 0, "CLASS");  //把class插在["id","name","tag"]的id和name之间。
 	Expr.find.CLASS = function( match, context, isXML ) {
 		if ( typeof context.getElementsByClassName !== "undefined" && !isXML ) {
 			return context.getElementsByClassName(match[1]);
@@ -5270,7 +5270,7 @@ Sizzle.isXML = function( elem ) {
 	return documentElement ? documentElement.nodeName !== "HTML" : false;
 };
 
-var posProcess = function( selector, context, seed ) {
+var posProcess = function( selector, context, seed ) { //在指定的上下文数组context下，查找与选择器表达式selector匹配的元素集合，支持伪类。
 	var match,
 		tmpSet = [],
 		later = "",
@@ -5280,20 +5280,20 @@ var posProcess = function( selector, context, seed ) {
 	// And so must :not(positional) so we move all PSEUDOs to the end
 	while ( (match = Expr.match.PSEUDO.exec( selector )) ) {
 		later += match[0];
-		selector = selector.replace( Expr.match.PSEUDO, "" );
+		selector = selector.replace( Expr.match.PSEUDO, "" ); //循环删除伪类，放在later中。
 	}
 
 	selector = Expr.relative[selector] ? selector + "*" : selector;
 
 	for ( var i = 0, l = root.length; i < l; i++ ) {
-		Sizzle( selector, root[i], tmpSet, seed );
+		Sizzle( selector, root[i], tmpSet, seed ); //调用Sizzle查找结果
 	}
 
-	return Sizzle.filter( later, tmpSet );
+	return Sizzle.filter( later, tmpSet ); //用伪类过滤结果
 };
 
 // EXPOSE
-// Override sizzle attribute retrieval
+// Override sizzle attribute retrieval //暴露Sizzle方法和属性给jQuery
 Sizzle.attr = jQuery.attr;
 Sizzle.selectors.attrMap = {};
 jQuery.find = Sizzle;
@@ -6822,7 +6822,7 @@ function getWH( elem, name, extra ) {
 
 if ( jQuery.expr && jQuery.expr.filters ) {
 	jQuery.expr.filters.hidden = function( elem ) {
-		var width = elem.offsetWidth,
+		var width = elem.offsetWidth, //通过dom元素的可见宽度和高度是否为0来判断该元素hidden
 			height = elem.offsetHeight;
 
 		return ( width === 0 && height === 0 ) || (!jQuery.support.reliableHiddenOffsets && ((elem.style && elem.style.display) || jQuery.css( elem, "display" )) === "none");
@@ -8842,13 +8842,13 @@ jQuery.extend( jQuery.fx, {
 // Do not set anything below 0
 jQuery.each([ "width", "height" ], function( i, prop ) {
 	jQuery.fx.step[ prop ] = function( fx ) {
-		jQuery.style( fx.elem, prop, Math.max(0, fx.now) + fx.unit );
+		jQuery.style( fx.elem, prop, Math.max(0, fx.now) + fx.unit ); 
 	};
 });
 
 if ( jQuery.expr && jQuery.expr.filters ) {
 	jQuery.expr.filters.animated = function( elem ) {
-		return jQuery.grep(jQuery.timers, function( fn ) {
+		return jQuery.grep(jQuery.timers, function( fn ) { //遍历全局动画函数数组jQuery.timers。:animated
 			return elem === fn.elem;
 		}).length;
 	};
