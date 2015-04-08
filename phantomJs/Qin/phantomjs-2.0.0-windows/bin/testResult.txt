@@ -1,22 +1,3 @@
-对http://www.baidu.com进行加载测试，测试次数为20次，测试开始时间2015/04/07 周二 22:49:05.37
-1 times Loading,used Time: 1326 ms
-1 times Loading,used Time: 1345 ms
-1 times Loading,used Time: 1440 ms
-1 times Loading,used Time: 1390 ms
-1 times Loading,used Time: 1451 ms
-1 times Loading,used Time: 1421 ms
-1 times Loading,used Time: 1283 ms
-1 times Loading,used Time: 1329 ms
-1 times Loading,used Time: 1335 ms
-1 times Loading,used Time: 1275 ms
-1 times Loading,used Time: 1324 ms
-1 times Loading,used Time: 1214 ms
-1 times Loading,used Time: 1296 ms
-1 times Loading,used Time: 1284 ms
-1 times Loading,used Time: 1457 ms
-1 times Loading,used Time: 1447 ms
-1 times Loading,used Time: 1586 ms
-1 times Loading,used Time: 1531 ms
-1 times Loading,used Time: 1311 ms
-1 times Loading,used Time: 1347 ms
-1369 ms
+对http://tingshu.openspeech.cn/IflyListenNovel/pages/novel/info.jsp进行加载测试，测试次数为1次，测试开始时间2015/04/08 周三 14:43:21.27
+1 times Loading,used Time: 349 ms
+aveTime is 349 ms

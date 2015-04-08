@@ -1,0 +1,10 @@
+{
+  "name": "testCase",
+  "version": "1.0.0",
+  "description": "nodejs_testCase_with_MochaShouldInstanbul",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ahkari",
+  "license": "ISC"
+}

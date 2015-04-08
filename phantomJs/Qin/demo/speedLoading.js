@@ -49,9 +49,11 @@ function main(times,urlArr){
       var usedTime=(now.getTime()- t);
       console.log(i + " times Loading,used Time: " + usedTime + " ms");
       t = now.getTime();
+      page.render('example1.png');
       };//else
       if(i == times) {
          //console.log("average times is "+(loadTime_Aveage/times) + " ms");
+         // page.render('example.png');
          phantom.exit();
          return;
       }
