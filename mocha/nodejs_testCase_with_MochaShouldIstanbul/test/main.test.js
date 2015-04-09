@@ -2,6 +2,10 @@
 var main=require('../src/main');
 var should=require('should');
 
+var tenMath=function(n){
+	return n*10;
+}
+
 describe('test/main.test.js',function(){
 	
 
@@ -39,17 +43,13 @@ describe('test/main.test.js',function(){
 			main.fibonacci('呵呵');
 		}).should.throw('n should be a Number');
 	});
-
-
-
-
-
-
-
-
 });//describe
 
-
+describe("local",function(){
+	it('should equal 10 when n=1',function(){
+		tenMath(1).should.eql(10);
+	});
+});
 
 
 
