@@ -1,0 +1,76 @@
+{
+    "project": {},
+    "files": {
+        "test.js": {
+            "name": "test.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        }
+    },
+    "modules": {},
+    "classes": {},
+    "classitems": [
+        {
+            "file": "test.js",
+            "line": 1,
+            "description": "Provides some mathematical functions\n(提供公共运算方法)",
+            "class": ""
+        },
+        {
+            "file": "test.js",
+            "line": 7,
+            "description": "这个方法接收两个操作数，a和b\n返回它们的和（如果他们两是strings，返回它们的串联结果，）",
+            "itemtype": "method",
+            "name": "sum",
+            "params": [
+                {
+                    "name": "a",
+                    "description": "first operand",
+                    "type": "Number or String"
+                },
+                {
+                    "name": "b",
+                    "description": "second operand",
+                    "type": "Number or String"
+                }
+            ],
+            "return": {
+                "description": "The 'summed' value",
+                "type": "Number or String"
+            },
+            "class": ""
+        },
+        {
+            "file": "test.js",
+            "line": 20,
+            "description": "这个方法接收两个操作数，a和b\n返回它们的乘积",
+            "itemtype": "method",
+            "name": "product",
+            "params": [
+                {
+                    "name": "a",
+                    "description": "first operand",
+                    "type": "Number"
+                },
+                {
+                    "name": "b",
+                    "description": "second operand",
+                    "type": "Number"
+                }
+            ],
+            "return": {
+                "description": "The product",
+                "type": "Number"
+            },
+            "class": ""
+        }
+    ],
+    "warnings": [
+        {
+            "message": "Missing item type\nProvides some mathematical functions\n(提供公共运算方法)",
+            "line": " test.js:1"
+        }
+    ]
+}
