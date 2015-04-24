@@ -1,13 +1,11 @@
 define(["demo"],function(demo){
 // var main=require('../src/main');
 // var should=require('../node_modules/should/should.js');
-
 var tenMath=function(n){
 	return n*10;
 };
-
 var str="abc";
-console.log("mocha is running");
+//console.log("mocha is running");
 describe('main.js',function(){
 	describe('testFunc.fibonacci',function(){
 		it('should equal 0 when n===0',function(){
@@ -42,17 +40,14 @@ describe('main.js',function(){
 		it('str should startWith s',function(){
 			str.should.startWith('a');
 		});
+		it('should return -1 when not present',function(){
+			[1,2,3].indexOf(4).should.equal(-1);
+		})
 	});
 });//describe
 
 
 });//define
-
-
-
-
-
-
 
 
 

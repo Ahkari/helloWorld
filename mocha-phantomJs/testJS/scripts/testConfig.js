@@ -30,3 +30,4 @@ requirejs.config({
 
     }
 });
+

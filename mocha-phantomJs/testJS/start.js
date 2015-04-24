@@ -1,3 +1,4 @@
+//define(["demo_test"],function(demo_test){
 define(["demo_test","novel_test","common_test"],function(demo_test,novel_test,common_test){
 //需要测试什么部分，就添加进依赖中。
 // define(["demo_test","novel_test"],function(demo_test,novel_test){
@@ -9,6 +10,8 @@ define(["demo_test","novel_test","common_test"],function(demo_test,novel_test,co
 
 
 //mocha框架主入口
+
+
 if (window.mochaPhantomJS) { 
     mochaPhantomJS.run(); 
     console.log("mocha-phantomjs is run");
@@ -19,9 +22,6 @@ if (window.mochaPhantomJS) {
 
 
 
-
-
 });//define
-
 
       

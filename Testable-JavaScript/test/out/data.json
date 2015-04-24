@@ -1,0 +1,120 @@
+{
+    "project": {},
+    "files": {
+        "src\\test1.js": {
+            "name": "src\\test1.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "src.js": {
+            "name": "src.js",
+            "modules": {},
+            "classes": {
+                "MyClass": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        }
+    },
+    "modules": {},
+    "classes": {
+        "MyClass": {
+            "name": "MyClass",
+            "shortname": "MyClass",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "src.js",
+            "line": 1,
+            "description": "This is the description for my class.(这里是俺的类的描述)",
+            "is_constructor": 1
+        }
+    },
+    "classitems": [
+        {
+            "file": "src\\test1.js",
+            "line": 1,
+            "description": "method sum",
+            "params": [
+                {
+                    "name": "a",
+                    "description": "[first arg]",
+                    "type": "[num][string]"
+                },
+                {
+                    "name": "b",
+                    "description": "[second arg]",
+                    "type": "[num][string]"
+                }
+            ],
+            "return": {
+                "description": "[result]",
+                "type": "[num][string]"
+            },
+            "class": "MyClass"
+        },
+        {
+            "file": "src.js",
+            "line": 9,
+            "description": "My method description.  Like other pieces of your comment blocks, \nthis can span multiple lines.(和其他注释块一样，可以横跨很多行)",
+            "itemtype": "method",
+            "name": "methodName",
+            "params": [
+                {
+                    "name": "foo",
+                    "description": "Argument 1 (参数一)",
+                    "type": "String"
+                },
+                {
+                    "name": "config",
+                    "description": "A config object (一个配置对象)",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "name",
+                            "description": "The name on the config object (配置对象的名字)",
+                            "type": "String"
+                        },
+                        {
+                            "name": "callback",
+                            "description": "A callback function on the config object (配置对象的回调函数)",
+                            "type": "Function"
+                        }
+                    ]
+                },
+                {
+                    "name": "extra",
+                    "description": "Do extra, optional work (可选)",
+                    "type": "Boolean",
+                    "optional": true,
+                    "optdefault": "false"
+                }
+            ],
+            "return": {
+                "description": "Returns true on success (成功返回true)",
+                "type": "Boolean"
+            },
+            "class": "MyClass"
+        },
+        {
+            "file": "src.js",
+            "line": 23,
+            "description": "My property description.  Like other pieces of your comment blocks, \nthis can span multiple lines.",
+            "itemtype": "property",
+            "name": "propertyName",
+            "type": "{Object}",
+            "default": "\"foo\"",
+            "class": "MyClass"
+        }
+    ],
+    "warnings": [
+        {
+            "message": "Missing item type\nmethod sum",
+            "line": " src\\test1.js:1"
+        }
+    ]
+}

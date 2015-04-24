@@ -61,7 +61,22 @@ JSInit	//减少复杂性，确保不使用过于复杂或容易出错的构造�
 3.不提倡++或--。一般正常使用
 4.循环需要有花括号。
 
+JSLint是一个JavaScript验证工具（非开源），可以扫描JavaScript源代码来查找问题。如果JSLint发现一 个问题，JSLint就会显示描述这个问题的消息，并指出错误在源代码中的大致位置。有些编码风格约定可能导致未预见的行为或错误，JSLint除了能指 出这些不合理的约定，还能标志出结构方面的问题。尽管JSLint不能保证逻辑一定正确，但确实有助于发现错误，这些错误很可能导致浏览器的 JavaScript引擎抛出错误。
 
+JSLint定义了一组编码约定，这比ECMA定义的语言更为严格。这些编码约定汲取了多年来的丰富编码经验，并以一条年代久远的编程原则 作为宗旨：能做并不意味着应该做。JSLint会对它认为有的编码实践加标志，另外还会指出哪些是明显的错误，从而促使你养成好的 JavaScript编码习惯。
+JSLint可能会把一些结构方面的错误标志为可疑的编码实践，以下列出了其中一部分（完整的列表可以参考JSLint的文档）。
+
+    JSLint要求所有代码行都以分号结束。尽管JavaScript确实允许将换行符作为行结束符，但一般认为这种做法是不明确的，而且是不好的编码风格。
+
+    使用if和for的语句必须使用大括号把语句块括起来。
+
+    不同于其他编程语言，在JavaScript中，块不会作为变量的作用域。JavaScript只支持函数级作用域。因此，JSLint只接受作为function、if、switch、while、for、do和try语句一部分的块，其他的块都会标志为错误。
+
+    var只能声明一次，而且在使用之前必须声明。
+
+    JSLint会把出现在return、break、continue或throw语句后面的代码标志为不可达的代码。这些语句后面必须紧跟一个结束大括号。
+
+    对于JavaScript来说，JSLint是一个非常好的工具，因为它会教你一些好的JavaScript编码实践。由于JSLint能 把可能导致逻辑错误或其他未预见行为的部分标出来，因此可以减少调试时间。如果你调试一段JavaScript代码时遇到困难，可以试试JSLint。
 
 三.圈复杂度  //表示代码中独立现行路径的数量，需编写的单元测试的最小数量
 可用jsmeter这样的简单的命令行工具
@@ -113,9 +128,9 @@ function makeChickenDinner(ingredients){	//食谱：如何做鸡肉大餐（香�
 		,oven=new ConventionalOven()		//烤炉我们用  普通的有情怀的烤炉
 		,mixer=new Mixer()					//混合器就用  混合器
 		,dish=mixer.mix(chicken,ingredients)//一盘食物	混合器使用了自己特有的搅拌方法，把鸡肉和香料处理装盘
-
-	return oven.bake(dish,new FDegrees(350),new Timer("50 minutes"));	//有情怀的烤炉，把装盘的食物，以350度，烘焙50分钟。然后返回给久等的我们。
-}
+	//有情怀的烤炉，把装盘的食物，以350度，烘焙50分钟。然后返回给久等的我们。
+	return oven.bake(dish,new FDegrees(350),new Timer("50 minutes"));	
+}	
 var dinner=makeChickenDinner(ingredients);	//今天的晚饭就吃用自选香料的鸡肉大餐
 
 该函数扇出高的离谱，创建了五个外部对象，并调用了两个不同对象的两个方法。
@@ -156,7 +171,6 @@ Cooker.prototype.degrees_f=function(deg){
 Cooker.prototype.timer=function(time){
 	return new Timer(time);
 };
-
 function makeChickenDinner(ingredients,cooker){	//食谱：如何做鸡肉大餐（香料，有节操烤箱）
 	var chicken=new ChickenBreast()				//鸡肉就选	新鲜的鸡脯肉
 		,mixer=new Mixer()						//混合器就用  混合器
@@ -280,8 +294,21 @@ function setTable(cloth,Dishes){
 大多数人都没有做，
 但其实我们非常支持这么做。
 
+注释转换为API文档。
+比较js自动化文档工具。YUIDoc,JSDoc3,JSDuck,Doc,Docco
+
+
 YUIDoc	//根据你写的代码注释生成API文档，需要遵循javadoc，以/**开始以*/结束
 //配合以sublimeText的DocBlockr。
+使用：
+1.安装nodejs
+2.npm -g install yuidocjs
+3.在源文件夹中 yuidoc .
+
+
+0.如果你想增加一些下述标签说不明白的信息，或是想说明方法的目的。或其他内容。
+应该把这些内容放在所有标签开始之前，YUIDoc会把包含进文档。
+
 1.YUI注释规范，必须以两个**开头
 /**
  * YUIDOC会认这个
@@ -324,10 +351,19 @@ this.templateString = "div";
 @private/@protected	传统语言中的。不能在实例之外访问。(YUIDco忽略)
 @requires	一个module依赖多个module时标明。
 @default  定义@property的默认值。
-@uses	
-@example
-@chainable
-@
+@uses	模拟子类，设置从另一个类中借其属性和方法。
+@example	在代码中加入实例说明。
+			/**
+			 * @method greet
+			 * @example  
+			 * 		person.greet("Jane");
+			 */
+			Person.prototype.greet = function(name){};
+@chainable	可链式调用。因为方法里面返回了当前对象所以你可以调完一个方法后再调另一个方法。
+@deprecated/@since/@beta	待弃用/从哪个版本加入/标注为beta，不向下(后)兼容
+@extension/@extensionfor/@extension_for	可嵌套
+
+
 
 npm -g install yuidocjs
 JSDoc	

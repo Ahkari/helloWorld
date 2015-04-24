@@ -22,7 +22,6 @@
 //上面3-20是执行单元测试前代码。后面是改进后的，需要确定输入值不能大于10小于0,必须为numvber
 
 function main(){
-
 };
 main.prototype={
 	fibonacci:function(n){
@@ -47,8 +46,6 @@ main.prototype={
 };
 var testFunc=new main();
 
-
-
 // if (require.main===module){
 // 	//直接执行main.js时会进入此处
 // 	//如果main.js被其他文件require，则此处不会执行
@@ -56,10 +53,4 @@ var testFunc=new main();
 // 	console.log('fibonacci('+n+')is',fibonacci(n));
 // }
 // exports.fibonacci=fibonacci;
-
-
-
-
-
-
 
