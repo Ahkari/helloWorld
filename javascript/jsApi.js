@@ -147,7 +147,7 @@ Date.parse(dateVal) //返回自1970.1.1以来的毫秒数
 
 parseFloat(numString)   //返回字符串转换得到的浮点数
 
-parseInt(numString,[radix]) //
+parseInt(numString,[radix]) //返回由字符串转换得到的整数。
 
 arrayObj.pop()  //
 
