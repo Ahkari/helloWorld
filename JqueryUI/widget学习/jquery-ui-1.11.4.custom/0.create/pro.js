@@ -48,17 +48,15 @@ $.widget('customs.progressbar1',{
 
 
 //加载调用
-$(function(){
+// $(function(){
 	var $bar = $('<div></div>')
 		.appendTo('body')
-		.progressbar1({
-
-			complete : function(event,data){
-				console.log( 'callback trigger') ;
-			}
-
-
-		})
+		// .progressbar1({
+		// 	complete : function(event,data){
+		// 		console.log( 'callback trigger') ;
+		// 	}
+		// })
+		.progressbar1()
 		.bind( 'progressbar1complete' , function( event,data){
 			console.log('event trigger bubble') ;
 			console.log('the progress bar value is ' + data.value ) ;
@@ -80,7 +78,7 @@ $(function(){
 	//这个是私有, 所以弄不了
 	// console.log( $bar.progressbar('_constrain',50) ) ;
 
-})
+// })
 
 
 
