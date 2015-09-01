@@ -1,11 +1,16 @@
 (function(){
 $.widget('customs.progressbar1',{
-	options: {value: 0}
+	options: {value: 0,count: 0}
 	,
 	_create: function(){
 		this.options.value = this._constrain(this.options.value) ;
 		this.element.addClass('progressbar') ;
 		this.refresh() ;
+		console.log( this.options.count++ ) ;
+	}
+	,
+	_init: function(){
+		console.log( this.options.count++ ) ;
 	}
 	,
 	_setOption: function( key, value){
@@ -38,9 +43,34 @@ $.widget('customs.progressbar1',{
 			return value ;
 		}
 	}
-
+	,addStart: function( beforeVal ){
+		var a = this.addOne( beforeVal ) ;
+		console.log( a ) ;
+	}
+	,addOne: function( beforeVal ){
+	    return beforeVal + 2 ;
+	}
+	,
 
 })
+$.widget('customs.progressbar2', $.customs.progressbar1 ,{
+	options : {
+		defaultValue: 200 
+	}
+	,
+	addOne: function(val){
+		val  = this._superApply( arguments ) ;
+		return val + 10 ;
+	}
+	,
+	callbackFunc: function( val ){
+		if ( val === 30 ){
+			var result = this._trigger('addOne', null, { val : 50 }) ;
+			console.log( result ) ;
+		}
+	}
+})
+
 
 
 })()
@@ -56,14 +86,24 @@ $.widget('customs.progressbar1',{
 		// 		console.log( 'callback trigger') ;
 		// 	}
 		// })
-		.progressbar1()
-		.bind( 'progressbar1complete' , function( event,data){
-			console.log('event trigger bubble') ;
-			console.log('the progress bar value is ' + data.value ) ;
+		// .progressbar1({
+		// 	addOne: function(val){
+		// 		return val+1 ;
+		// 	},
+		// 	change: function(){
+		// 		console.log('change-callback') ;
+		// 	},
+		// 	complete: function(){
+		// 		console.log('trigger-complete') ;
+		// 	}
+		// })
+		// .bind( 'progressbar1complete' , function( event,data){
+		// 	console.log('event trigger bubble') ;
+		// 	console.log('the progress bar value is ' + data.value ) ;
 
-		}) ;
+		// }) ;
 
-	$bar.progressbar1( 'option', 'value', 100) ;
+	//$bar.progressbar1( 'option', 'value', 50) ;
 	//执行方法, 没参数, 则获取
 	// console.log( $bar.progressbar1( 'value' )) ;
 	//执行方法, 有参数, 则设置
